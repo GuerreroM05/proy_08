@@ -294,17 +294,21 @@ sedan.nivelGasolina();
 sedan.numeroCinturonesSeguridad();
 
 // Modelo: Instructor
+// Definición de la función Instructor que toma los parámetros nombre, línea y jornada
 function Instructor(nombre, linea, jornada) {
-    this.nombre = nombre;
-    this.linea = linea;
-    this.jornada = jornada;
+    this.nombre = nombre; // Establece la propiedad nombre en el objeto actual
+    this.linea = linea; // Establece la propiedad línea en el objeto actual
+    this.jornada = jornada; // Establece la propiedad jornada en el objeto actual
 }
 
+// Define el método informacionInstructor en el prototipo de Instructor
 Instructor.prototype.informacionInstructor = function () {
     console.log(`Información del Instructor: Nombre: ${this.nombre}, Línea: ${this.linea}, Jornada: ${this.jornada}`);
 }
 
+// Define el método programaFormacion en el prototipo de Instructor
 Instructor.prototype.programaFormacion = function () {
+    // Establece la variable programa en función de la línea del instructor
     let programa = '';
     if (this.linea === 'Software') {
         programa = 'Análisis y desarrollo de software';
@@ -316,83 +320,39 @@ Instructor.prototype.programaFormacion = function () {
     console.log(`Programa de formación: ${programa}`);
 }
 
-// Modelo: InstructorPlanta (hereda de Instructor)
+// Modelo: InstructorPlanta que hereda de Instructor y toma los parámetros nombre, línea, jornada y fechaVinculacion
 function InstructorPlanta(nombre, linea, jornada, fechaVinculacion) {
+    // Llama al constructor de Instructor con los parámetros correspondientes
     Instructor.call(this, nombre, linea, jornada);
-    this.fechaVinculacion = fechaVinculacion;
+    this.fechaVinculacion = fechaVinculacion; // Establece la propiedad fechaVinculacion en el objeto actual
 }
 
+// Establece el prototipo de InstructorPlanta como un nuevo objeto con el prototipo de Instructor
 InstructorPlanta.prototype = Object.create(Instructor.prototype);
+// Restaura el constructor de InstructorPlanta
 InstructorPlanta.prototype.constructor = InstructorPlanta;
 
+// Define el método informacionInstructor en el prototipo de InstructorPlanta
 InstructorPlanta.prototype.informacionInstructor = function () {
     console.log(`Información del Instructor de Planta: Nombre: ${this.nombre}, Línea: ${this.linea}, Jornada: ${this.jornada}, Fecha de Vinculación: ${this.fechaVinculacion}`);
 }
 
+// Define el método tiempoVinculacion en el prototipo de InstructorPlanta
 InstructorPlanta.prototype.tiempoVinculacion = function () {
+    // Calcula el tiempo de vinculación en meses
     const fechaActual = new Date();
     const fechaVinculacion = new Date(this.fechaVinculacion);
     const mesesVinculados = (fechaActual - fechaVinculacion) / (1000 * 60 * 60 * 24 * 30); // Aproximación en meses
     console.log(`Tiempo de vinculación: ${mesesVinculados.toFixed(2)} meses`);
 }
 
-// Modelo: Restaurante
+// Modelo: Restaurante que toma los parámetros plato, cantidad y precio
 function Restaurante(plato, cantidad, precio) {
-    this.plato = plato;
-    this.cantidad = cantidad;
-    this.precio = precio;
+    this.plato = plato; // Establece la propiedad plato en el objeto actual
+    this.cantidad = cantidad; // Establece la propiedad cantidad en el objeto actual
+    this.precio = precio; // Establece la propiedad precio en el objeto actual
 }
 
-Restaurante.prototype.pedidoRestaurante = function () {
-    console.log(`Pedido en el restaurante: Plato: ${this.plato}, Cantidad: ${this.cantidad}, Precio unitario: $${this.precio}`);
-}
-
-Restaurante.prototype.valorPedido = function () {
-    return this.cantidad * this.precio;
-}
-
-Restaurante.prototype.descuentoPedido = function () {
-    if (this.cantidad > 2 && this.valorPedido() >= 50000) {
-        return 0.1 * this.valorPedido();
-    }
-    return 0;
-}
-
-// Modelo: RestauranteDomicilio (hereda de Restaurante)
-function RestauranteDomicilio(plato, cantidad, precio, tiempoEntrega, valorDomicilio) {
-    Restaurante.call(this, plato, cantidad, precio);
-    this.tiempoEntrega = tiempoEntrega;
-    this.valorDomicilio = valorDomicilio;
-}
-
-RestauranteDomicilio.prototype = Object.create(Restaurante.prototype);
-RestauranteDomicilio.prototype.constructor = RestauranteDomicilio;
-
-RestauranteDomicilio.prototype.informacionRestaurante = function () {
-    console.log(`Información del Restaurante a Domicilio: Plato: ${this.plato}, Cantidad: ${this.cantidad}, Precio unitario: $${this.precio}, Tiempo de entrega: ${this.tiempoEntrega} minutos, Valor domicilio: $${this.valorDomicilio}`);
-}
-
-RestauranteDomicilio.prototype.valorPedido = function () {
-    return this.cantidad * this.precio + this.valorDomicilio;
-}
-
-// Ejemplo de uso
-let instructor = new Instructor('Juan', 'Software', 'Mañana');
-instructor.informacionInstructor();
-instructor.programaFormacion();
-
-let instructorPlanta = new InstructorPlanta('Maria', 'Hardware', 'Tarde', '2020-01-15');
-instructorPlanta.informacionInstructor();
-instructorPlanta.tiempoVinculacion();
-
-let restaurante = new Restaurante('Pizza', 3, 15000);
-restaurante.pedidoRestaurante();
-console.log(`Valor total del pedido: $${restaurante.valorPedido()}`);
-console.log(`Descuento aplicado: $${restaurante.descuentoPedido()}`);
-
-let restauranteDomicilio = new RestauranteDomicilio('Hamburguesa', 2, 12000, 30, 5000);
-restauranteDomicilio.informacionRestaurante();
-console.log(`Valor total del pedido a domicilio: $${restauranteDomicilio.valorPedido()}`);
     </script>
     
 </body>
